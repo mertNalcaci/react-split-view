@@ -14,7 +14,7 @@ npm install --save react-split-view
 
 ```jsx
 import React, { Component } from 'react';
-import SplitView from 'react-split-view';
+import SplitView from 'react-split-viewport';
 
 const Example = () => (
   <SplitView

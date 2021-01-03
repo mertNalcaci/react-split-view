@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SplitView } from 'react-split-view';
+import { SplitView } from 'react-split-viewport';
 
 const App = () => {
 
