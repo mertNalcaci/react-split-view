@@ -16,6 +16,7 @@ const SplitView = ({
   resizeHandlerProps,
   onResize,
   showSwitcher,
+  onSwitchClick,
   switcherProps
 }) => {
   const wrapperRef = useRef();
@@ -53,8 +54,8 @@ const SplitView = ({
   const handleSwitchClick = () => {
     setWidth(isMinimized ? range.max : range.min);
 
-    if (typeof switcherProps.onSwitchClick === 'function') {
-      switcherProps.onSwitchClick({ isMinimized: !isMinimized });
+    if (typeof onSwitchClick === 'function') {
+      onSwitchClick({ isMinimized: !isMinimized });
     }
   };
 
@@ -147,14 +148,14 @@ SplitView.propTypes = {
     })
   }),
   showSwitcher: bool,
+  onSwitchClick: func,
   switcherProps: shape({
     markup: oneOfType([element, node]),
     position: shape({
       x: number,
       y: number,
       unit: string
-    }),
-    onSwitchClick: func
+    })
   })
 };
 
@@ -184,9 +185,9 @@ SplitView.defaultProps = {
     }
   },
   showSwitcher: true,
+  onSwitchClick: null,
   switcherProps: {
     markup: <DefaultButton content="Switch" />,
-    onSwitchClick: null,
     position: {
       x: 10,
       y: 10,

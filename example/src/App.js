@@ -13,8 +13,8 @@ const App = () => {
         max: 100
       }}
       onResize={({ isMinimized }) => setIsMinimized(isMinimized)}
+      onSwitchClick={({ isMinimized }) => setIsMinimized(isMinimized)}
       switcherProps={{
-        onSwitchClick: ({ isMinimized }) => setIsMinimized(isMinimized),
         markup: <button>{isMinimized ? 'Maximize' : 'Minimize'}</button>
       }}
   	/>

@@ -23,10 +23,19 @@ export const Wrapper = styled.div`
   `}
 `;
 
-export const Button = styled.button`
+export const Switcher = styled.div`
   position: absolute; 
   right: 10px;
   top: 10px;
+`;
+
+export const DefaultButton = styled.button`
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  &:before {
+    content: ${({ content }) => `"${content}"`};
+  }
 `;
 
 export const Resizer = styled.div`
@@ -36,14 +45,14 @@ export const Resizer = styled.div`
   top: 50%;
   left: 0;
   background-color: ${({ bgColor }) => bgColor};
-  cursor: pointer;
+  cursor: col-resize;
   transform: translate(-50%, -50%);
 `;
 
 export const ResizeHandler = styled.div`
   position: absolute;
-  ${({ position: { x, y } }) => `top: ${y}%; left: ${x}%;`}
-  ${({ position: { x, y } }) => (x === 50 && y === 50) && 'transform: translate(-50%, -50%);'}
+  ${({ x, y, unit }) => `top: ${y}${unit}; left: ${x}${unit};`}
+  ${({ x, y }) => (x === 50 && y === 50) && 'transform: translate(-50%, -50%);'}
 `;
 
 export const DefaultResizeHandler = styled.div`
