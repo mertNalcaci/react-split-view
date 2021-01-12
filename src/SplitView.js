@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { oneOfType, element, node, number, shape, string, func } from 'prop-types';
+import { oneOfType, element, node, number, shape, string, func, bool } from 'prop-types';
 
 import {
-  Wrapper, Col, Resizer, Button, ResizeHandler, DefaultResizeHandler, DefaultContent
+  Wrapper, Col, Resizer, DefaultButton, ResizeHandler, DefaultResizeHandler, DefaultContent, Switcher
 } from './styles';
 
 const getPercentage = x => parseFloat(((x * 100) / window.innerWidth).toPrecision(2));
@@ -14,7 +14,9 @@ const SplitView = ({
   range,
   resizeProps,
   resizeHandlerProps,
-  onResize
+  onResize,
+  showSwitcher,
+  switcherProps
 }) => {
   const wrapperRef = useRef();
   const [width, setWidth] = useState(initWidth);
@@ -43,8 +45,16 @@ const SplitView = ({
       setWidth(newWidth);
       // trigger onResize
       if (typeof onResize === 'function') {
-        onResize({ left: 100 - newWidth, right: newWidth });
+        onResize({ left: 100 - newWidth, right: newWidth, isMinimized: newWidth - range.min <= 10 });
       }
+    }
+  };
+
+  const handleSwitchClick = () => {
+    setWidth(isMinimized ? range.max : range.min);
+
+    if (typeof switcherProps.onSwitchClick === 'function') {
+      switcherProps.onSwitchClick({ isMinimized: !isMinimized });
     }
   };
 
@@ -81,7 +91,6 @@ const SplitView = ({
   };
 
   return (
-    // eslint-disable-next-line no-ternary
     <Wrapper
       ref={wrapperRef}
       {...{ isResizing }}
@@ -94,17 +103,20 @@ const SplitView = ({
           {...resizeProps}
           onMouseDown={onMouseDown}
         >
-          <ResizeHandler {...resizeHandlerProps}>
+          <ResizeHandler { ...resizeHandlerProps.position }>
             {resizeHandlerProps.markup}
           </ResizeHandler>
         </Resizer>
         {right}
       </Col>
-      <Button
-        onClick={() => setWidth(isMinimized ? range.max : range.min)}
-      >
-        {isMinimized ? 'Maximize' : 'Minimize'}
-      </Button>
+      {showSwitcher && (
+        <Switcher
+          { ...switcherProps.position }
+          onClick={handleSwitchClick}
+        >
+          {switcherProps.markup}
+        </Switcher>
+      )}
     </Wrapper>
   );
 };
@@ -127,18 +139,29 @@ SplitView.propTypes = {
     })
   }),
   resizeHandlerProps: shape({
+    markup: oneOfType([element, node]),
     position: shape({
       x: number,
-      y: number
+      y: number,
+      unit: string
+    })
+  }),
+  showSwitcher: bool,
+  switcherProps: shape({
+    markup: oneOfType([element, node]),
+    position: shape({
+      x: number,
+      y: number,
+      unit: string
     }),
-    markup: oneOfType([element, node])
+    onSwitchClick: func
   })
 };
 
 SplitView.defaultProps = {
   initWidth: 50,
-  left: <DefaultContent content='Left Side' />,
-  right: <DefaultContent content='Right Side' />,
+  left: <DefaultContent content="Left" />,
+  right: <DefaultContent content="Right" />,
   range: {
     min: 25,
     max: 75
@@ -156,7 +179,18 @@ SplitView.defaultProps = {
     markup: <DefaultResizeHandler />,
     position: {
       x: 50,
-      y: 50
+      y: 50,
+      unit: '%'
+    }
+  },
+  showSwitcher: true,
+  switcherProps: {
+    markup: <DefaultButton content="Switch" />,
+    onSwitchClick: null,
+    position: {
+      x: 10,
+      y: 10,
+      unit: 'px'
     }
   }
 };
