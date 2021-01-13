@@ -18,14 +18,14 @@ import { SplitView } from 'react-split-viewport';
 
 const App = () => (
 	<SplitView
-  	  initWidth={45}
-      range={{
-        min: 25,
-        max: 75
-      }}
-      left=<div>Left</div>
-      right=<div>Right</div>
-  	/>
+	  initWidth={45}
+    range={{
+      min: 25,
+      max: 75
+    }}
+    left=<div>Left</div>
+    right=<div>Right</div>
+	/>
 );
 
 export default App;
