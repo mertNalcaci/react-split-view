@@ -1,13 +1,19 @@
+
 # react-split-viewport
 
-> It splits view in half
+A react component that splits view in half.
+
+## [Live Demo](https://codesandbox.io/s/react-split-viewport-d8ntt?file=/src/App.js)
 
 [![NPM](https://img.shields.io/npm/v/react-split-viewport.svg)](https://www.npmjs.com/package/react-split-viewport) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
-
 ```bash
 npm install --save react-split-viewport
+```
+or
+```bash
+yarn add react-split-viewport
 ```
 
 ## Usage
@@ -18,13 +24,13 @@ import { SplitView } from 'react-split-viewport';
 
 const App = () => (
 	<SplitView
-	  initWidth={45}
-    range={{
-      min: 25,
-      max: 75
-    }}
-    left=<div>Left</div>
-    right=<div>Right</div>
+		initWidth={45}
+		range={{
+		  min: 25,
+		  max: 75
+		}}
+		left={<div>Left</div>}
+		right={<div>Right</div>}
 	/>
 );
 
