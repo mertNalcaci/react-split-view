@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { oneOfType, element, node, number, shape, string, func, bool } from 'prop-types';
 
 import {
-  Wrapper, Col, Resizer, DefaultButton, ResizeHandler, DefaultResizeHandler, DefaultContent, Switcher
+  Wrapper, Col, Resizer, DefaultButton, ResizeHandler, DefaultResizeHandler, DefaultContent, Switcher, ColContent
 } from './styles';
 
 const getPercentage = x => parseFloat(((x * 100) / window.innerWidth).toPrecision(2));
@@ -97,7 +97,9 @@ const SplitView = ({
       {...{ isResizing }}
     >
       <Col {...{ width, resizeProps, side: 'left' }}>
-        {left}
+        <ColContent>
+          {left}
+        </ColContent>
       </Col>
       <Col {...{ width, resizeProps, side: 'right' }}>
         <Resizer
@@ -108,7 +110,9 @@ const SplitView = ({
             {resizeHandlerProps.markup}
           </ResizeHandler>
         </Resizer>
-        {right}
+        <ColContent>
+          {right}
+        </ColContent>
       </Col>
       {showSwitcher && (
         <Switcher

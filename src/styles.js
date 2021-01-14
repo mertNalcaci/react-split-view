@@ -3,10 +3,16 @@ import styled from 'styled-components';
 export const Col = styled.div`
   position: relative;
   flex: 1 1;
-  // min-width: 0;
+  min-width: 0;
   flex-basis: ${({ width, side }) => (side === 'left' ? `${100 - width}%` : `${width}%`)};
   ${({ side, resizeProps: { width } }) => `padding-${side === 'left' ? 'right' : 'left'}: ${width / 2}px`};
   transition: flex-basis .3s;
+`;
+
+export const ColContent = styled.div`
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
 `;
 
 export const Wrapper = styled.div`
@@ -56,7 +62,8 @@ export const ResizeHandler = styled.div`
 `;
 
 export const DefaultResizeHandler = styled.div`
-  background-color: #009688;
+  background-color: #ffeb3b;
+  border: 4px solid #322f3d;
   border-radius: 50%;
   width: 16px;
   height: 16px;
